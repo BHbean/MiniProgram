@@ -1,0 +1,75 @@
+/* pages/detail/detail.wxss */
+page {
+  background-color: white;
+}
+
+.small-title {
+  margin-top: 3px;
+  padding-right: 2px;
+  padding-bottom: 3px;
+  padding-left: 2px;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  border-bottom: 2px solid #0081ff;
+  overflow-wrap: break-word !important;
+}
+
+.index {
+  padding: 0.3em 0.4em;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.8em;
+  min-height: 1.6em;
+  line-height: 1;
+  text-align: center;
+  border-radius: 80% 100% 90% 20%;
+  /* background-color: rgb(249, 110, 87); */
+  background-image: linear-gradient(45deg, #0081ff, #1cbbb4);
+  color: rgb(255, 255, 240);
+  overflow-wrap: break-word !important;
+}
+
+.small-title-box {
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 1em;
+  overflow-wrap: break-word !important
+}
+
+.small-title-content {
+  margin-left: 0.4em;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  line-height: 1.4;
+  overflow-wrap: break-word !important;
+}
+
+.small-title-text-box {
+  max-width: 100%;
+  color: rgb(9, 14, 21);
+  box-sizing: border-box !important;
+  overflow-wrap: break-word !important;
+}
+
+.small-title-text {
+  max-width: 100%;
+  box-sizing: border-box !important;
+  overflow-wrap: break-word !important;
+}
+
+/* 设置背景遮罩层样式 */
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

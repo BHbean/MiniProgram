@@ -1,0 +1,98 @@
+<!--pages/detail/detail.wxml-->
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+  <view slot="content">{{customBarTitle}}</view>
+</cu-custom>
+
+<scroll-view>
+  <view class="margin" style="border: 2px solid #0081ff; border-radius: 1rem;">
+
+    <!-- 大标题 -->
+    <view class="text-bold" style="text-align: center; font-size: 1.25rem;">{{info.title}}</view>
+
+    <!-- 报名网址 -->
+    <view class="small-title padding margin-left-xs" style="font-size: 1.0rem">
+      <view class="index">
+        <view class="small-title-box text-bold">1</view>
+      </view>
+      <view class="small-title-content">
+        <view class="small-title-box">
+          <view class="small-title-text-box">
+            <view class="small-title-text text-bold">报名网址</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="padding-xs text-lg" style="white-space: pre-wrap; word-break: break-all;">
+      <text bindlongpress="longPressCopyUrl">\t{{info.url}}</text>
+    </view>
+
+    <!-- 截止日期 -->
+    <view class="small-title padding margin-left-xs" style="font-size: 1.0rem">
+      <view class="index">
+        <view class="small-title-box text-bold">2</view>
+      </view>
+      <view class="small-title-content">
+        <view class="small-title-box">
+          <view class="small-title-text-box">
+            <view class="small-title-text text-bold">截止日期</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="padding-xs text-lg" style="white-space: pre-wrap;">
+      <text user-select="true">\t{{info.deadline}}</text>
+    </view>
+
+    <!-- 公告内容 -->
+    <view class="small-title padding margin-left-xs" style="font-size: 1.0rem">
+      <view class="index">
+        <view class="small-title-box text-bold">3</view>
+      </view>
+      <view class="small-title-content">
+        <view class="small-title-box">
+          <view class="small-title-text-box">
+            <view class="small-title-text text-bold">公告内容</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="padding-xs" style="white-space: pre-wrap;"> {{info.content}}</view> -->
+    <towxml nodes="{{article}}" />
+
+    <!-- 原文链接 -->
+    <view class="small-title padding margin-left-xs" style="font-size: 1.0rem">
+      <view class="index">
+        <view class="small-title-box text-bold">4</view>
+      </view>
+      <view class="small-title-content">
+        <view class="small-title-box">
+          <view class="small-title-text-box">
+            <view class="small-title-text text-bold">原文链接</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="padding-xs">
+      <text class="text-lg" style="word-break: break-all; white-space: pre-wrap;"
+        user-select="true" bindlongpress="longPressCopyArticleUrl">\t{{info.article_url}}</text>
+    </view>
+
+    <!-- 报名按钮 -->
+    <view class="text-center">
+      <button class="cu-btn bg-{{btnColor}} round shadow margin lg" bindtap="signUp" disabled="{{btnBlock}}">
+        <text class="{{btnLoading? 'cuIcon-loading2 iconfont-spin': ''}}"></text>
+        {{btnText}}
+      </button>
+    </view>
+
+  </view>
+</scroll-view>
+
+<!-- 刷新用进度条 -->
+<view class='load-progress {{loadProgress!=0?"show":"hide"}}' style="top:{{CustomBar}}px;">
+  <view class='load-progress-bar bg-green' style="transform: translate3d(-{{100-loadProgress}}%, 0px, 0px);"></view>
+  <view class='load-progress-spinner text-green'></view>
+</view>
+
+<!-- mask 层以阻止加载时的用户点击行为 -->
+<view class="mask" hidden="{{allowPoint}}"></view>

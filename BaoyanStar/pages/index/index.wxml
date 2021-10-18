@@ -1,0 +1,18 @@
+<!--pages/index/index.wxml-->
+<list wx:if="{{PageCur=='list'}}"></list>
+<schedule wx:if="{{PageCur=='schedule'}}"></schedule>
+
+<view class="cu-bar tabbar bg-white shadow foot">
+  <view class="action" bindtap="NavChange" data-cur="list">
+    <view class='cuIcon-cu-image lg'>
+      <text class="lg cuIcon-copy {{PageCur=='list'?'text-cyan':'text-gray'}} text-sl"></text>
+    </view>
+    <view class="{{PageCur=='list'?'text-cyan':'text-gray'}}">信息</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="schedule">
+    <view class='cuIcon-cu-image'>
+      <text class="cuIcon-calendar {{PageCur=='schedule'?'text-cyan':'text-gray'}}"></text>
+    </view>
+    <view class="{{PageCur=='schedule'?'text-cyan':'text-gray'}}">规划</view>
+  </view>
+</view>

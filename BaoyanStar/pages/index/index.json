@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "list": "/pages/tabs/list/list",
+    "schedule": "/pages/tabs/schedule/schedule"
+  }
+}

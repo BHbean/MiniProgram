@@ -1,0 +1,25 @@
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+:host {
+  background-color: rgb(241, 241, 241);
+}
+
+/* 设置背景遮罩层样式 */
+.mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.transparent {
+  background: rgba(255, 255, 255, 0);
+}
+

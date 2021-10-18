@@ -1,0 +1,14 @@
+<!--pages/invalid/invalid.wxml-->
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">无效页</view>
+</cu-custom>
+<view class="margin-xl padding-xl bg-white radius shadow shadow-lg">
+  <view class="padding-xs flex align-center">
+    <view class="flex-sub text-center">
+      <view class="solid-bottom text-xl padding">
+        <text class="text-black text-bold">十分抱歉！</text>
+      </view>
+      <view class="padding">该款小程序并非为您量身打造，请使用其他产品！</view>
+    </view>
+  </view>
+</view>

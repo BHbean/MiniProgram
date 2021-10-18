@@ -1,0 +1,143 @@
+<!--pages/schedule/schedule.wxml-->
+
+<scroll-view scroll-y class="scrollPage">
+  <cu-custom bgColor="bg-gradual-blue">
+    <view slot="content">{{customBarTitle}}</view>
+  </cu-custom>
+
+  <view class="background">
+    <!-- 已报名的列表 -->
+    <view class="bg-white top-part">
+      <view class="bg-white top-bar">
+        <view class="text-bold text-lg top-title">
+          已报名
+        </view>
+        <view class="bottom-dashed-border"></view>
+      </view>
+
+    </view>
+    <view class="bg-white applied-camps">
+      <view class="camp-item margin-xs" wx:for="{{camps}}" wx:key="_id">
+        <view class="cu-tag round line-{{colorList[index%colorList.length]}}" style="font-size: 32rpx;"
+          bindtap="showModal" data-id="{{item._id}}" data-idx="{{index}}">
+          <view class="cu-tag badge" wx:if="{{!item.qualified}}"></view>
+          {{item.college}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 弹出的模态框以调整时间和重要程度 -->
+    <view class="cu-modal bottom-modal {{showModal?'show':''}}">
+      <view class="cu-dialog">
+        <view class="cu-bar bg-white">
+          <view class="action text-green" bindtap="modifyInfomation">确定</view>
+          <view class="action text-blue" bindtap="hideModal">取消</view>
+        </view>
+        <view>
+          <form>
+            <view class="cu-list menu sm-border text-grey">
+              <view class="cu-item">
+                <picker mode="date" header-text="选择时间" value="{{startDate}}" bindchange="bindStartDateChange">
+                  <view class="picker">
+                    <view class="picker-title">
+                      <text class="cuIcon-time"></text>
+                      <text class="text-grey">考核开始时间： </text>
+                    </view>
+                    <view class="picker-date text-grey">
+                      {{startDate}}
+                    </view>
+                  </view>
+                </picker>
+              </view>
+              <view class="cu-item">
+                <picker mode="date" header-text="选择时间" value="{{endDate}}" bindchange="bindEndDateChange">
+                  <view class="picker">
+                    <view class="picker-title">
+                      <text class="cuIcon-time"></text>
+                      <text class="text-grey">考核结束时间： </text>
+                    </view>
+                    <view class="picker-date text-grey">
+                      {{endDate}}
+                    </view>
+                  </view>
+                </picker>
+              </view>
+              <view class="cu-item" style="text-align: left;">
+                <view class="content">
+                  <view>
+                    <text class="cuIcon-like"></text>
+                    <text>重要程度： </text>
+                  </view>
+                </view>
+                <form>
+                  <radio-group class="block" bindchange="bindWeightChange">
+                    <view class="cu-form-group margin-top">
+                      <view class="title text-green">保底</view>
+                      <radio color="green" class="radio" value="5" checked="{{weight == 5? 'true': false}}"></radio>
+                    </view>
+                    <view class="cu-form-group">
+                      <view class="title text-orange">中等</view>
+                      <radio color="orange" class="radio" value="3" checked="{{weight == 3? 'true': false}}"></radio>
+                    </view>
+                    <view class="cu-form-group">
+                      <view class="title text-red">冲刺</view>
+                      <radio class="radio" color="red" value="1" checked="{{weight == 1? 'true': false}}"></radio>
+                    </view>
+                  </radio-group>
+                </form>
+              </view>
+              <view class="cu-item" style="display: flex; justify-content: center;">
+                <button class="cu-btn bg-green round shadow margin lg" bindtap="updateQualified">
+                  未入选
+                </button>
+              </view>
+            </view>
+          </form>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的时间表 -->
+  <view class="padding-top schedule-part margin-bottom-xl">
+    <view class="bg-white top-part padding-top">
+      <view class="bg-white top-bar">
+        <view class="text-bold text-lg top-title schedule-title">
+          我的时间表
+        </view>
+        <view class="bottom-dashed-border"></view>
+      </view>
+    </view>
+
+    <view class="margin-bottom-xl">
+      <!-- 未获得院校时间信息列表时的提示 -->
+      <view wx:if="{{campsForTimeline.length == 0}}" class="margin-top" style="text-align: center;">
+        <view class="text-xl text-bold">未获取到任何考核时间信息~</view>
+        <view class="text-xl text-bold">请点击上方院校名称进行设置~</view>
+      </view>
+      <!-- 时间轴 -->
+      <view wx:for="{{campsForTimeline}}" wx:if="{{item.weight}}" wx:key="_id"
+        class="cu-timeline {{index == campsForTimeline.length - 1? 'huge-margin-bottom': ''}}">
+        <view class="cu-time">{{item.start_date}}</view>
+        <view class="cu-item text-{{item.weight == 1? 'red': item.weight == 3? 'orange': 'green'}}">
+          <view class="content bg-{{item.weight == 1? 'red': item.weight == 3? 'orange': 'green'}} shadow-blur">
+            <view class="cu-capsule radius">
+              <view
+                class="cu-tag bg-white text-{{item.weight == 1? 'red': item.weight == 3? 'orange': 'green'}} text-bold">
+                {{item.weight == 1? '冲刺': item.weight == 3? '中等': '保底'}}
+              </view>
+              <view class="cu-tag line-white">{{item.start_date}} ~ {{item.end_date}}</view>
+            </view>
+            <view class="margin-top-sm text-lg" style="text-align: center;">
+              {{item.college}}
+            </view>
+
+          </view>
+        </view>
+        <!-- <view class="cu-item text-{{item.weight == 1? 'red': item.weight == 3? 'orange': 'green'}}"></view> -->
+      </view>
+    </view>
+
+  </view>
+
+</scroll-view>

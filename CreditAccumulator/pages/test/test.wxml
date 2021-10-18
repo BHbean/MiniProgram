@@ -1,0 +1,16 @@
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">登录方法测试</view>
+</cu-custom>
+
+<view class="root">
+  <button wx:if="{{!hasLogin}}" class="cu-btn bg-orange lg round" bindtap="login">LogIn</button>
+  <image wx:if="{{hasLogin}}" class="avatar" src="{{avatarUrl}}"></image>
+  <text wx:if="{{hasLogin}}" class="nickName">{{nickName}}</text>
+  <button wx:if="{{hasLogin}}" class="cu-btn bg-orange lg round" bindtap="logOut">LogOut</button>
+</view>
+
+<picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;">
+  <picker-view-column>
+    <view wx:for="{{numBird}}" style="line-height: 50px; text-align: center;">{{item}}</view>
+  </picker-view-column>
+</picker-view>

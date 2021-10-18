@@ -1,0 +1,27 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="true">
+  <view slot="backText" bindtap="goBack">
+    <text class="cuIcon-back"></text>
+  </view>
+  <view slot="content">加入房间</view>
+</cu-custom>
+
+<view class="flex justify-center text-xl" style="margin-top: 50%;">请输入<text class="text-bold">房间号:</text></view>
+
+<form class="margin-top">
+  <view class='ipt_box'>
+    <input type='number' wx:for="{{inputLen}}" wx:key="index" disabled bindtap='onFocus'
+      value="{{iptValue.length>=index+1?iptValue[index]:''}}" />
+  </view>
+  <input name="password" password="{{true}}" class='hidden_ipt' maxlength="{{inputLen}}" focus="{{isFocus}}"
+    bindinput="setValue" type="number"></input>
+</form>
+
+<view class="flex justify-center">
+  <button class="cu-btn round lg bg-white" bindtap="enterRoom">加入房间</button>
+</view>
+
+
+<view class='cu-load load-modal' wx:if="{{loadModal}}">
+  <!-- <image src='/images/logo.png' class='png' mode='aspectFit'></image> -->
+  <view class='gray-text'>加入房间中...</view>
+</view>

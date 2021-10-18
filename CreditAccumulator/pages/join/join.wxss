@@ -1,0 +1,45 @@
+.content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50% 80rpx;
+}
+
+.iptbox {
+  width: 110rpx;
+  height: 110rpx;
+  border-bottom: 2rpx solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 50rpx;
+  background-color: white;
+}
+
+form{
+  display: flex;
+  justify-content: space-around;
+  width:100%;
+}
+
+form input{
+  height: 108rpx;
+  width:108rpx;
+  border:1px solid #cdcdcd;
+  border-radius: 8rpx;
+  display: inline-block;
+  line-height: 94px;
+  text-align: center;
+  font-size: 48rpx;
+  color:#323232;
+  margin:0 8rpx;
+  background-color: white;
+}
+
+form .hidden_ipt{
+  height: 0rpx;
+  width:0rpx;
+  border:none;
+  margin:0;
+}

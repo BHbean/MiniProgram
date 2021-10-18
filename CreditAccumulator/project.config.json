@@ -1,0 +1,68 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "showES6CompileOption": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.19.6",
+  "appid": "wxac9f6c640822dfa0",
+  "projectname": "CreditAccumulator",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "cloudfunctionRoot": "cloudfunctions/",
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "list": []
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "房间",
+          "pathName": "pages/room/room",
+          "query": "id=0087",
+          "scene": null
+        },
+        {
+          "name": "test",
+          "pathName": "pages/test/test",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "test_room",
+          "pathName": "pages/room/room",
+          "query": "id=0095&invited=true",
+          "scene": 1008
+        }
+      ]
+    }
+  }
+}

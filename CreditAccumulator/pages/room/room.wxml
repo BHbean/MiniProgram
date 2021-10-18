@@ -1,0 +1,249 @@
+<!-- <scroll-view> -->
+  <view class="DrawerPage">
+    <cu-custom bgColor="bg-gradual-blue" isBack="true">
+      <view slot="backText" bindtap="leaveRoom">
+        <text class="cuIcon-back"></text>
+      </view>
+      <view slot="content">房间 {{roomId}}</view>
+    </cu-custom>
+
+
+    <!-- 房间准备界面 -->
+    <view class="margin padding-xl bg-white radius shadow shadow-lg" wx:if="{{!isPlaying}}">
+      <view class="flex justify-center text-xl text-bold solid-bottom">当前房间：{{roomId}}</view>
+      <view class="flex justify-center text-lg margin-top-sm">请上桌玩家点击<text class="text-orange">准备</text></view>
+      <view class="flex justify-center">可以点击“+”号或分享本页面邀请好友哟~</view>
+      <view class="flex justify-center margin-top flex-wrap">
+        <view wx:for="{{userList}}" wx:key="openid" style="margin: 8rpx;">
+          <view class='text-center'>
+            <view class="{{item.openid == openid? 'avatar-outer': ''}}">
+              <view class="cu-avatar xl round" style="background-image:url({{item.avatarUrl}});">
+                <view class="cu-tag badge cuIcon-check bg-green" wx:if="{{item.onTable}}"></view>
+              </view>
+            </view>
+            <view class="padding-xs">{{item.nickName}}</view>
+          </view>
+        </view>
+        <!-- 邀请框 -->
+        <view class="margin-xs">
+          <view class='text-center'>
+            <button open-type="share" class="cu-avatar xl round solids"
+              style="background-image:url({{invitationImage}});"></button>
+            <!-- <view class="padding-xs">{{invitationText}}</view> -->
+          </view>
+        </view>
+      </view>
+      <!-- 准备按钮 -->
+      <view class="flex justify-center">
+        <button class="cu-btn lg round lines-orange margin-top" disabled="{{readyBtnLoading}}" bindtap="getReady">
+          <text class="{{readyBtnLoading? 'cuIcon-loading2 iconfont-spin': ''}}"></text>
+          <view class="cuIcon-check text-bold" wx:if="{{myInfo.onTable && !readyBtnLoading}}"></view>
+          {{myInfo.onTable? '已': ''}}准备
+        </button>
+      </view>
+    </view>
+
+    <!-- 分数计算界面 -->
+    <view wx:else class="margin-top">
+      <view class="flex justify-between align-center">
+        <button class="cu-btn round bg-white sm margin-left" bindtap="showModal" data-target="viewWaitingList"><text
+            class="cuIcon-game"></text> 等待中</button>
+        <button class="cu-btn round bg-white text-xl text-bold padding-xl" hover-class="none"> 计分板 </button>
+        <button class="cu-btn round bg-white sm margin-right" bindtap="showModal" data-target="viewHistory"><text
+            class="cuIcon-countdown"></text> 历史</button>
+      </view>
+      <view class="cu-list menu sm-border card-menu margin-top">
+        <view class="cu-item" wx:for="{{players}}" wx:key="openid">
+          <view class="content">
+            <text class="cu-avatar round" style="background-image:url({{item.avatarUrl}});"></text>
+            <text class="text-{{item.openid == openid? 'orange': 'grey'}} margin-left-xs">{{item.nickName}}</text>
+            <text class="text-{{item.openid == openid? 'orange': 'grey'}}" wx:if="{{item.openid == openid}}">（我）</text>
+          </view>
+          <view class="action">
+            <text class="text-grey">{{item.credit}} 分</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="flex justify-around" wx:if="{{myInfo.onTable}}">
+        <view class="cu-avatar bg-orange light xl round margin-top-xl" bindtap="showModal" data-target="hu">胡</view>
+        <view class="cu-avatar bg-orange light xl round margin-top-xl" bindtap="showModal" data-target="gang">杠</view>
+        <view class="cu-avatar bg-orange light xl round margin-top-xl" bindtap="showModal" data-target="WithdrawModal">
+          <text class="cuIcon-repeal" style="transform: rotate(90deg);"></text>
+        </view>
+      </view>
+      <view class="flex justify-around margin-top" wx:else>
+        <view class="text-xxl text-bold text-orange">等待队列中...</view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 抽屉拉出等待游戏的用户列表 -->
+  <view class="DrawerClose {{modalName=='viewWaitingList'?'show':''}}" bindtap="hideModal" data-target="viewWaitingList">
+    <text class="cuIcon-pullright"></text>
+  </view>
+  <scroll-view scroll-y class="DrawerWindow {{modalName=='viewWaitingList'?'show':''}}">
+    <view class="flex justify-center text-bold text-lg margin-top-xl text-black">等待中</view>
+    <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
+      <view class="cu-item" wx:for="{{waiters}}" wx:key="openid">
+        <view class="content">
+          <text class="cu-avatar round" style="background-image:url({{item.avatarUrl}});"></text>
+          <text class="text-{{item.openid == openid? 'orange': 'grey'}} margin-left-xs">{{item.nickName}}</text>
+          <text class="text-{{item.openid == openid? 'orange': 'grey'}}" wx:if="{{item.openid == openid}}">（我）</text>
+        </view>
+        <view class="action">
+          <text class="cuIcon-order" style="transform: rotate(90deg);" bindtap="exchangePosition" data-id="{{item.openid}}" wx:if="{{myInfo.onTable}}"></text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+
+  <!-- 抽屉拉出历史记录列表 -->
+  <view class="DrawerClose DrawerCloseReverse {{modalName=='viewHistory'?'show':''}}" bindtap="hideModal" data-target="viewHistory">
+    <text class="cuIcon-pullleft"></text>
+  </view>
+  <scroll-view scroll-y class="DrawerWindow DrawerWindowReverse {{modalName=='viewHistory'?'show':''}}">
+    <view class="flex justify-center text-bold text-lg margin-top-xl text-black">对局历史</view>
+    <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
+      <view class="cu-item" wx:for="{{historyList}}" wx:key="_id">
+        <view class="content padding-tb-sm">
+          <view>
+            <text class="cuIcon-discover text-blue margin-right-xs"></text> 第 {{index + 1}} 局</view>
+          <view class="text-gray margin" wx:for="{{historyList[index]}}" wx:for-item="entry">
+            <text class="cuIcon-title margin-right-xs"></text>
+              {{TYPE_DICT[entry.type]}}：
+              <text class="cu-avatar round sm" style="background-image:url({{entry.winner.avatarUrl}});"></text>
+              <text class="text-green">+{{entry.score * entry.losers.length}}</text>
+              <text class="cu-avatar-group">
+                <text class="cu-avatar round sm" wx:for="{{entry.losers}}" wx:for-item="loser" style="background-image:url({{loser.avatarUrl}});"></text>
+              </text>
+              <text class="text-red">-{{entry.score}}</text>
+            </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 用户计算“胡”的模态框 -->
+  <view class="cu-modal bottom-modal {{modalName=='hu'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white">
+        <view class="action text-green" bindtap="addHistoryEntry" data-type="hu">确定</view>
+        <view class="action text-blue" bindtap="hideModal" data-target="hu">取消</view>
+      </view>
+      <form>
+        <view class="cu-form-group padding-sm">
+          <view class="title margin-left">自摸</view>
+          <switch bindchange="getHuType" checked="{{isOwnDraw}}"></switch>
+        </view>
+        <view class="cu-form-group padding-sm">
+          <view class="title margin-left">鸟数</view>
+          <picker-view indicator-style="height: 40px;" style="width: 100rpx; height: 160rpx;" bindchange="getBirdNum">
+            <picker-view-column>
+              <view wx:for="{{birdNumList}}" style="line-height: 40px; text-align: center;">{{item}}</view>
+            </picker-view-column>
+          </picker-view>
+        </view>
+        <view class="cu-form-group padding-sm" wx:if="{{!isOwnDraw}}">
+          <view class="title margin-left">点炮者</view>
+          <picker-view indicator-style="height: 50px;" style="width: 200rpx; height: 180rpx;" bindchange="getShooter">
+            <picker-view-column>
+              <view wx:for="{{others}}" style="line-height: 50px; text-align: center;">
+                <text class="cu-avatar round" style="background-image:url({{item.avatarUrl}});"></text>
+                {{item.nickName}}
+              </view>
+            </picker-view-column>
+          </picker-view>
+        </view>
+      </form>
+    </view>
+  </view>
+
+  <!-- 用户计算“杠”的模态框 -->
+  <view class="cu-modal bottom-modal {{modalName=='gang'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white">
+        <view class="action text-green" bindtap="addHistoryEntry" data-type="gang">确定</view>
+        <view class="action text-blue" bindtap="hideModal" data-target="gang">取消</view>
+      </view>
+      <form>
+        <view class="cu-form-group padding-sm">
+          <view class="title margin-left">自摸杠</view>
+          <switch bindchange="getGangType" checked="{{isSelfGang}}"></switch>
+        </view>
+        <view class="cu-form-group padding-sm" wx:if="{{isSelfGang}}">
+          <view class="title margin-left">碰后杠</view>
+          <switch bindchange="getGangAfterPeng" checked="{{isAfterPeng}}"></switch>
+        </view>
+        <view class="cu-form-group padding-sm" wx:else>
+          <view class="title margin-left">被杠者</view>
+          <picker-view indicator-style="height: 50px;" style="width: 200rpx; height: 180rpx;" bindchange="getShooter">
+            <picker-view-column>
+              <view wx:for="{{others}}" style="line-height: 50px; text-align: center;">
+                <text class="cu-avatar round" style="background-image:url({{item.avatarUrl}});"></text>
+                {{item.nickName}}
+              </view>
+            </picker-view-column>
+          </picker-view>
+        </view>
+      </form>
+    </view>
+  </view>
+<!-- </scroll-view> -->
+
+<!-- 用户确认撤回的模态框 -->
+<view class="cu-modal {{modalName=='WithdrawModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">撤回</view>
+      <view class="action" bindtap="hideModal" data-target="WithdrawModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      确认要撤回一条记录么？
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal" data-target="WithdrawModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="withdrawRecord">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 用户处理换位邀请的模态框 -->
+<view class="cu-modal {{myInfo.invitedPositionExchange?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">换位请求</view>
+    </view>
+    <view class="padding-xl">
+      是否同意进行换位？
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-red text-red" bindtap="processPositionExchange" data-type="reject">拒绝</button>
+        <button class="cu-btn bg-green margin-left" bindtap="processPositionExchange" data-type="confirm">接受</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- mask 层以阻止页面加载时的用户点击行为 -->
+<view class="mask" hidden="{{!myInfo.waiting}}">
+  <view class="text-xl text-bold">请等待其他玩家进行操作~</view>
+</view>
+
+<!-- 授权登录的 mask 层 -->
+<view class="mask" hidden="{{hasUserInfo}}">
+  <button class="cu-btn lg text-green" bindtap="invitedToEnterRoom">
+    <text class="cuIcon-weixin"></text> 授权登录
+  </button>
+</view>
+
+<!-- 透明 mask 层以阻止在用户返回该界面时的点击行为 -->
+<view class="mask transparent" hidden="{{!transparent}}"></view>

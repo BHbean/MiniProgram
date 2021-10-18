@@ -1,0 +1,25 @@
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">计分器</view>
+</cu-custom>
+
+<view class="body">
+
+  <view class="margin-xl padding-xl bg-white radius shadow shadow-lg ">
+    <view class="flex justify-center">
+      <block>
+        <view class='text-center' bindtap="getUserInfo" style="pointer-events: {{hasUserInfo? 'none': 'auto'}};">
+          <view class="cu-avatar xl round solids" style="background-image:url({{userInfo.avatarUrl}})"></view>
+          <view class="padding">{{userInfo.nickName}}</view>
+        </view>
+      </block>
+    </view>
+    <view style="display: flex; flex-direction: row-reverse;"><text class="cuIcon-delete" bindtap="quitRoom"></text>
+    </view>
+  </view>
+
+  <view class="text-center margin-top flex justify-around">
+    <button class="cu-btn bg-white lg round" bindtap="createRoom">创建房间</button>
+    <button class="cu-btn bg-white lg round" bindtap="joinRoom">加入房间</button>
+  </view>
+
+</view>
